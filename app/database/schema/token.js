@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: by1773
+ * @Date: 2020-03-17 09:19:03
+ * @LastEditors: by1773
+ * @LastEditTime: 2020-03-17 14:07:30
+ */
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -40,7 +48,7 @@ TokenSchema.statics = {
         let token = await this.findOne({
             name: 'access_token'
         })
-
+     console.log('我是检查数据库模型的格式类型的',data)
         if (token) {
             token.token = data.access_token
             token.expires_in = data.expires_in
@@ -48,7 +56,7 @@ TokenSchema.statics = {
             token = new Token({
                 name: 'access_token',
                 token: data.access_token,
-                expires_in: data.expires_in
+                expires_in:data.expires_in
             })
         }
         await token.save()

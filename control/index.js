@@ -1,6 +1,6 @@
 const Fs = require('fs');
 const Request = require('request-promise');
-const Base = 'https://Api.weixin.qq.com/cgi-bin/';
+const Base = 'https://api.weixin.qq.com/cgi-bin/';
 const mpBase = 'https://mp.weixin.qq.com/cgi-bin/';
 const Api = {
     accessToken: Base + 'token?grant_type=client_credential',
@@ -47,7 +47,7 @@ module.exports = class WeChat {
         this.appSecret = opts.appSecret;
         this.getAccessToken = opts.getAccessToken;
         this.saveAccessToken = opts.saveAccessToken;
-
+        console.log('我是构造函数里面的初始数据---->',opts)
         this.fetchAccessToken();
     }
     async request(opts) {
@@ -70,12 +70,15 @@ module.exports = class WeChat {
     async updateAccessToken() {
         const url = `${Api.accessToken}&appid=${this.appID}&secret=${this.appSecret}`;
         const data = await this.request({ url });
-
+console.log(`${Api.accessToken}&appid=${this.appID}&secret=${this.appSecret}`)
+//api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+//Api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx930d8776d1651bba&secret=c9023528601289ef457d2e8f61ef6413
+console.log('expires_in_data',data)
         const Now = new Date().getTime();
         const ExpiresIn = Now + (data.expires_in - 20) * 1000;
 
         data.expires_in = ExpiresIn;
-
+        console.log('updateAccessToken',data)
         await this.saveAccessToken(data);
 
         return data;
@@ -335,6 +338,7 @@ module.exports = class WeChat {
     async handle(operation, ...args) {
         const TokenData = await this.fetchAccessToken();
         const Options = this[operation](TokenData.access_token, ...args);
+        console.log(Options, ":", Options); 
         const Data = await this.request(Options);
         console.log(operation, ":", Data);
         return Data;

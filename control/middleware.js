@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: by1773
+ * @Date: 2020-03-17 09:19:03
+ * @LastEditors: by1773
+ * @LastEditTime: 2020-03-17 13:33:53
+ */
 const Sha1 = require('sha1');
 const GetRawBody = require('raw-body');
 const Util = require('./util');
@@ -13,6 +21,10 @@ module.exports = (opts, reply) => {
         const Token = opts.Token;
         let str = [Token, timestamp, nonce].sort().join('');
         const Sha = Sha1(str);
+
+        // console.log('context.query',context.query)
+        // console.log('signature',signature)
+        // console.log('Sha',Sha)
         if ("GET" === context.method) {
             if (Sha === signature) {
                 context.body = echostr;
@@ -31,6 +43,9 @@ module.exports = (opts, reply) => {
             const Content = await Util.ParseXML(Data);
             const Message = Util.FormatMessage(Content.xml);
             context.weixin = Message;
+            // console.log('--------------------------------------')
+            // console.log(context)
+
             await reply.apply(context, [context, next]);
             const ReplyBody = context.body;
             const Msg = context.weixin;

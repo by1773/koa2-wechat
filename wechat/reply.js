@@ -8,13 +8,15 @@ module.exports = async(context, next) => {
 
     if ('text' === Message.MsgType) {
         let content = Message.Content;
-        let reply = "不管怎么样，我都喜欢你～";
+        let reply = "我听不明白～";
+
+        console.log('我来测试这一个数据的文本内容：',content)
         if ("1" === content) {
-            reply = "1. 我喜欢你";
+            reply = "1. 我第一次回复你了";
         } else if ("2" === content) {
-            reply = "2. 我喜欢你";
+            reply = "2. 我第二次回复你了";
         } else if ("3" === content) {
-            reply = "3. 我喜欢你";
+            reply = "3. 我第三次回复你了";
         } else if ("4" === content) {
             let data = await client.handle('uploadMaterial', 'image', resolve(__dirname, '../2.jpg'));
             reply = {

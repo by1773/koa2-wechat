@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: by1773
+ * @Date: 2020-03-17 09:19:03
+ * @LastEditors: by1773
+ * @LastEditTime: 2020-03-17 14:26:16
+ */
 const WeChat = require('../control/index.js')
 const mongoose = require('mongoose')
 
@@ -6,9 +14,9 @@ const Token = mongoose.model('Token')
 
 const wechatCfg = {
     wechat: {
-        appID: 'wx930d8776d1651bba',
-        appSecret: 'c9023528601289ef457d2e8f61ef6413',
-        token: 'wohuizhenxini21',
+        appID: 'wx1d434376a642eab5',
+        appSecret: '0abd15c765877c616a6d69fcd7ce0105',
+        token: 'walkerLee1773',
         getAccessToken: async() => {
             const res = await Token.getAccessToken()
             return res
